@@ -1,1 +1,474 @@
-created test1.txt file
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Travel Car Booking — Home</title>
+  <meta name="description" content="Book premium cars for travel — search, compare and reserve.">
+
+  <style>
+    /* --- Reset & base --- */
+    :root{
+      --accent:#0f6cff;
+      --muted:#6b7280;
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --shadow: 0 6px 18px rgba(16,24,40,0.08);
+      --radius:12px;
+      --glass: rgba(255,255,255,0.6);
+      --max-width:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#f7fbff 0%, var(--bg) 100%);
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding-bottom:80px;
+    }
+    .container{max-width:var(--max-width);margin:0 auto;padding:24px;}
+
+    /* --- Header / navigation --- */
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+    .logo{
+      width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#5eead4);
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;box-shadow:var(--shadow);
+    }
+    nav{display:flex;gap:16px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;padding:8px;border-radius:8px}
+    nav a.cta{background:var(--accent);color:white;padding:10px 14px}
+
+    /* --- Hero --- */
+    .hero{
+      display:grid;
+      grid-template-columns:1fr 420px;
+      gap:28px;
+      align-items:center;
+      margin-top:12px;
+    }
+    .hero-card{
+      background-image:linear-gradient(180deg, rgba(15,108,255,0.06), rgba(5,40,80,0.02));
+      padding:36px;border-radius:16px;box-shadow:var(--shadow);
+    }
+    .eyebrow{color:var(--accent);font-weight:600;margin-bottom:8px}
+    .hero h1{margin:0 0 12px;font-size:34px;line-height:1.05}
+    .hero p{margin:0 0 18px;color:var(--muted)}
+    .cta-row{display:flex;gap:12px}
+    .btn{
+      background:var(--accent);color:white;border:none;padding:12px 16px;border-radius:10px;font-weight:600;cursor:pointer;
+      box-shadow: 0 6px 14px rgba(15,108,255,0.14);
+    }
+    .btn.secondary{background:transparent;color:var(--accent);border:1px solid rgba(15,108,255,0.12);box-shadow:none}
+
+    /* --- Search form (right) --- */
+    .search-card{
+      background:linear-gradient(180deg,#fff, #fbfdff);
+      border-radius:16px;padding:18px;box-shadow:var(--shadow);
+    }
+    .search-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    label{font-size:13px;color:var(--muted)}
+    input,select{padding:10px;border-radius:10px;border:1px solid #e6eef8;background:white}
+    .full{grid-column:1/-1}
+    .search-actions{display:flex;align-items:center;gap:8px;margin-top:10px}
+    .price-pill{font-weight:700;color:var(--muted);font-size:13px}
+
+    /* --- Featured cars --- */
+    .section{margin-top:34px}
+    .section h2{margin:0 0 12px;font-size:22px}
+    .cars-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .car{
+      background:var(--card);border-radius:12px;padding:14px;box-shadow:var(--shadow);overflow:hidden;
+      display:flex;flex-direction:column;gap:10px;
+    }
+    .car img{width:100%;height:160px;object-fit:cover;border-radius:10px}
+    .car .meta{display:flex;justify-content:space-between;align-items:center}
+    .price{font-weight:800;color:var(--accent)}
+    .badge{font-size:12px;padding:6px 8px;border-radius:8px;background:rgba(15,108,255,0.08);color:var(--accent)}
+
+    /* --- Services --- */
+    .services{display:flex;gap:12px;flex-wrap:wrap}
+    .service{flex:1 1 220px;background:var(--card);padding:14px;border-radius:12px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center}
+    .service .icon{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#e6f0ff,#f2fff8);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
+
+    /* --- Testimonials --- */
+    .testimonials{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .testimonial{background:linear-gradient(180deg,#fff,#fbfdff);padding:16px;border-radius:12px;box-shadow:var(--shadow)}
+    .stars{color:#f59e0b;font-weight:700}
+
+    /* --- Footer --- */
+    footer{margin-top:42px;padding:28px 0;border-top:1px solid #eef3f8;background:transparent}
+    .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    .socials{display:flex;gap:10px;margin-top:8px}
+
+    /* --- Chat button --- */
+    .chat-btn{
+      position:fixed;right:20px;bottom:20px;width:64px;height:64px;border-radius:999px;background:var(--accent);
+      display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 10px 30px rgba(15,108,255,0.18);cursor:pointer;z-index:60;
+      border:none;
+    }
+    .chat-panel{
+      position:fixed;right:20px;bottom:94px;width:360px;max-width:92vw;background:var(--card);border-radius:12px;box-shadow:0 16px 40px rgba(2,6,23,0.18);overflow:hidden;z-index:60;
+      display:none;flex-direction:column;
+    }
+    .chat-header{padding:12px 14px;background:linear-gradient(90deg,var(--accent),#04c7a9);color:white;display:flex;justify-content:space-between;align-items:center}
+    .chat-body{padding:12px}
+    .chat-input{display:flex;gap:8px;padding:10px;border-top:1px solid #eef3f8}
+
+    /* --- Responsive --- */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr}
+      .cars-grid{grid-template-columns:repeat(2,1fr)}
+      .testimonials{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:640px){
+      header{padding:12px}
+      .cars-grid{grid-template-columns:1fr}
+      nav{display:none}
+      .hero h1{font-size:26px}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a class="brand" href="#">
+        <div class="logo">TC</div>
+        <div>
+          <div style="font-weight:700">TravelCars</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Premium car rentals</div>
+        </div>
+      </a>
+
+      <nav aria-label="Main navigation">
+        <a href="#">Fleet</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a class="cta" href="#">Sign up</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-card" aria-labelledby="hero-title">
+        <div class="eyebrow">Drive the best</div>
+        <h1 id="hero-title">Rent premium cars for your trips — fast & easy</h1>
+        <p>Compare top models from BMW, Mercedes, Audi, Tesla and more. Insurance, 24/7 support and flexible pickup/drop-off options.</p>
+
+        <div class="cta-row" style="margin-top:18px">
+          <button class="btn" onclick="document.querySelector('#pickup').scrollIntoView({behavior:'smooth'})">Book a car</button>
+          <button class="btn secondary" onclick="openChat()">Ask our AI</button>
+        </div>
+
+        <div style="margin-top:20px;color:var(--muted);font-size:14px">
+          <strong>Now available:</strong> Free cancellation up to 24 hours before pickup · Airport delivery available
+        </div>
+      </div>
+
+      <!-- SEARCH CARD -->
+      <aside class="search-card" id="pickup" aria-label="Booking search form">
+        <form id="searchForm" onsubmit="event.preventDefault(); openBookingModal();">
+          <div class="search-grid">
+            <div class="field">
+              <label for="pickupLocation">Pickup location</label>
+              <input id="pickupLocation" placeholder="City or airport" required>
+            </div>
+            <div class="field">
+              <label for="dropLocation">Drop-off location</label>
+              <input id="dropLocation" placeholder="Same or different" required>
+            </div>
+
+            <div class="field">
+              <label for="pickupDate">Pickup date</label>
+              <input id="pickupDate" type="date" required>
+            </div>
+            <div class="field">
+              <label for="dropDate">Drop-off date</label>
+              <input id="dropDate" type="date" required>
+            </div>
+
+            <div class="field full">
+              <label for="vehicleType">Vehicle type</label>
+              <select id="vehicleType">
+                <option value="any">Any — show all</option>
+                <option value="suv">SUV</option>
+                <option value="sedan">Sedan</option>
+                <option value="luxury">Luxury</option>
+                <option value="electric">Electric</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="search-actions" style="justify-content:space-between">
+            <div class="price-pill">From <span class="price">₹2,499/day</span></div>
+            <div style="display:flex;gap:8px">
+              <button type="submit" class="btn">Search vehicles</button>
+              <button type="button" class="btn secondary" onclick="openChat()">Need help?</button>
+            </div>
+          </div>
+        </form>
+      </aside>
+    </section>
+
+    <!-- FEATURED CARS -->
+    <section class="section" aria-labelledby="featuredTitle">
+      <h2 id="featuredTitle">Featured vehicles</h2>
+      <div class="cars-grid" role="list">
+        <!-- Car 1 -->
+        <article class="car" role="listitem">
+          <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=1b9bb89b6a7a1bbef5e7f4e4d8f3d8f0" alt="BMW exterior">
+          <div class="meta">
+            <div>
+              <div style="font-weight:700">BMW 5 Series</div>
+              <div style="font-size:13px;color:var(--muted)">Automatic • 4 seats</div>
+            </div>
+            <div style="text-align:right">
+              <div class="price">₹6,499</div>
+              <div style="font-size:12px;color:var(--muted)">per day</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn" onclick="reserve('BMW 5 Series')">Reserve</button>
+            <button class="btn secondary" onclick="viewDetails('BMW 5 Series')">Details</button>
+          </div>
+        </article>
+
+        <!-- Car 2 -->
+        <article class="car" role="listitem">
+          <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=a7b3b86420f2f6d9b8c5f8c1d2c9a7f5" alt="Mercedes exterior">
+          <div class="meta">
+            <div>
+              <div style="font-weight:700">Mercedes E-Class</div>
+              <div style="font-size:13px;color:var(--muted)">Automatic • 4 seats</div>
+            </div>
+            <div style="text-align:right">
+              <div class="price">₹7,199</div>
+              <div style="font-size:12px;color:var(--muted)">per day</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn" onclick="reserve('Mercedes E-Class')">Reserve</button>
+            <button class="btn secondary" onclick="viewDetails('Mercedes E-Class')">Details</button>
+          </div>
+        </article>
+
+        <!-- Car 3 -->
+        <article class="car" role="listitem">
+          <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=ef4d39ce6a9f0d9a1b7a7a4ea3b12c55" alt="Tesla exterior">
+          <div class="meta">
+            <div>
+              <div style="font-weight:700">Tesla Model 3</div>
+              <div style="font-size:13px;color:var(--muted)">Electric • 5 seats</div>
+            </div>
+            <div style="text-align:right">
+              <div class="price">₹8,999</div>
+              <div style="font-size:12px;color:var(--muted)">per day</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn" onclick="reserve('Tesla Model 3')">Reserve</button>
+            <button class="btn secondary" onclick="viewDetails('Tesla Model 3')">Details</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" aria-labelledby="servicesTitle">
+      <h2 id="servicesTitle">Why choose us</h2>
+      <div class="services">
+        <div class="service">
+          <div class="icon">24/7</div>
+          <div>
+            <div style="font-weight:700">24/7 Support</div>
+            <div style="font-size:13px;color:var(--muted)">We're here whenever you need assistance</div>
+          </div>
+        </div>
+
+        <div class="service">
+          <div class="icon">✓</div>
+          <div>
+            <div style="font-weight:700">Fully insured</div>
+            <div style="font-size:13px;color:var(--muted)">Comprehensive coverage included</div>
+          </div>
+        </div>
+
+        <div class="service">
+          <div class="icon">📍</div>
+          <div>
+            <div style="font-weight:700">Multiple locations</div>
+            <div style="font-size:13px;color:var(--muted)">Pickup & drop-off across cities & airports</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section" aria-labelledby="testTitle">
+      <h2 id="testTitle">What customers say</h2>
+      <div class="testimonials">
+        <div class="testimonial">
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px">
+            <div style="width:48px;height:48px;border-radius:999px;background:#e8f7ff;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)">A</div>
+            <div>
+              <div style="font-weight:700">Aisha R.</div>
+              <div style="font-size:13px;color:var(--muted)">Mumbai</div>
+            </div>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p style="margin-top:8px;color:var(--muted)">"Booked a Tesla for a weekend trip — flawless experience and great customer support."</p>
+        </div>
+
+        <div class="testimonial">
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px">
+            <div style="width:48px;height:48px;border-radius:999px;background:#fff6e6;display:flex;align-items:center;justify-content:center;font-weight:700;color:#f59e0b">R</div>
+            <div>
+              <div style="font-weight:700">Rohan S.</div>
+              <div style="font-size:13px;color:var(--muted)">Bengaluru</div>
+            </div>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p style="margin-top:8px;color:var(--muted)">"Smooth pickup at the airport and the Range Rover was immaculate."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <div style="font-weight:800">TravelCars</div>
+          <div style="color:var(--muted);margin-top:6px">Premium car rental for every journey.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;margin-bottom:6px">Contact</div>
+          <div style="color:var(--muted)">support@travelcars.example<br/>+91 98765 43210</div>
+        </div>
+        <div>
+          <div style="font-weight:700;margin-bottom:6px">Follow</div>
+          <div class="socials">
+            <a href="#" aria-label="Instagram" style="text-decoration:none;color:var(--muted)">Instagram</a>
+            <a href="#" aria-label="Twitter" style="text-decoration:none;color:var(--muted)">Twitter</a>
+            <a href="#" aria-label="Facebook" style="text-decoration:none;color:var(--muted)">Facebook</a>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;color:var(--muted);font-size:13px">© <span id="year"></span> TravelCars — All rights reserved</div>
+    </footer>
+  </div>
+
+  <!-- Chat button & panel -->
+  <button class="chat-btn" title="Chat with our assistant" aria-label="Chat" onclick="toggleChat()">💬</button>
+
+  <div class="chat-panel" id="chatPanel" role="dialog" aria-label="AI assistant">
+    <div class="chat-header">
+      <div style="font-weight:700">Readdy Agent</div>
+      <button style="background:transparent;border:none;color:white;font-weight:700;cursor:pointer" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div style="color:var(--muted);font-size:14px">Hi! I can help you find cars, check availability or book an appointment. Try: <em>"Show SUVs in Delhi from Nov 10"</em></div>
+    </div>
+    <div class="chat-input">
+      <input id="chatInput" placeholder="Ask a question..." style="flex:1;padding:10px;border-radius:8px;border:1px solid #eef3f8">
+      <button class="btn" onclick="sendChat()">Send</button>
+    </div>
+  </div>
+
+  <!-- Booking modal (simple) -->
+  <dialog id="bookingModal" style="border-radius:12px;border:none;padding:0;max-width:500px;width:92vw">
+    <form method="dialog" style="display:flex;flex-direction:column">
+      <div style="padding:18px;">
+        <h3 style="margin:0 0 6px">Confirm booking</h3>
+        <div style="color:var(--muted);font-size:14px;margin-bottom:12px">Enter your details to reserve a vehicle. This demo does not process payments.</div>
+        <label style="font-size:13px;color:var(--muted)">Name</label>
+        <input id="bookName" required style="padding:10px;border-radius:8px;border:1px solid #eef3f8;margin-bottom:8px">
+        <label style="font-size:13px;color:var(--muted)">Phone or email</label>
+        <input id="bookContact" required style="padding:10px;border-radius:8px;border:1px solid #eef3f8;margin-bottom:12px">
+        <div style="display:flex;gap:8px">
+          <button class="btn" onclick="completeBooking(event)">Confirm</button>
+          <button class="btn secondary" onclick="document.getElementById('bookingModal').close()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    // small helpers
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function toggleChat(){
+      const panel = document.getElementById('chatPanel');
+      panel.style.display = panel.style.display === 'flex' ? 'none' : 'flex';
+    }
+    function openChat(){
+      const panel = document.getElementById('chatPanel');
+      panel.style.display = 'flex';
+      document.getElementById('chatInput').focus();
+    }
+    function sendChat(){
+      const input = document.getElementById('chatInput');
+      if(!input.value.trim()) return;
+      const body = document.getElementById('chatBody');
+      const bubble = document.createElement('div');
+      bubble.style.background='#eef7ff';bubble.style.padding='10px';bubble.style.borderRadius='8px';bubble.style.marginTop='10px';
+      bubble.textContent = 'You: ' + input.value;
+      body.appendChild(bubble);
+      // demo reply (replace with real AI integration)
+      setTimeout(()=> {
+        const reply = document.createElement('div');
+        reply.style.background='#fff';reply.style.padding='10px';reply.style.borderRadius='8px';reply.style.marginTop='8px';
+        reply.style.border='1px solid #eef3f8';
+        reply.textContent = 'Readdy Agent: Sorry, this demo does not have a live AI. Connect your AI to get real replies.';
+        body.appendChild(reply);
+        body.scrollTop = body.scrollHeight;
+      },600);
+      input.value='';
+    }
+
+    function reserve(carName='Vehicle'){
+      // prefill and open modal
+      document.getElementById('bookName').value='';
+      document.getElementById('bookContact').value='';
+      const modal = document.getElementById('bookingModal');
+      if(typeof modal.showModal === 'function'){
+        modal.showModal();
+      } else {
+        alert('Reserve ' + carName + ' — modal not supported.');
+      }
+    }
+
+    function viewDetails(name){
+      alert('Open details page for: ' + name + '\n(Implement /car/:id route or modal)');
+    }
+
+    function openBookingModal(){
+      // triggered when user searches - simple demo
+      const modal = document.getElementById('bookingModal');
+      if(typeof modal.showModal === 'function'){
+        modal.showModal();
+      }
+    }
+
+    function completeBooking(e){
+      e.preventDefault();
+      const name = document.getElementById('bookName').value.trim();
+      const contact = document.getElementById('bookContact').value.trim();
+      if(!name || !contact){ alert('Please enter name and contact'); return; }
+      // in real app -> post to API
+      document.getElementById('bookingModal').close();
+      alert('Thanks ' + name + '! Your booking request has been received. We will contact you at ' + contact + '. (Demo)');
+    }
+  </script>
+</body>
+</html>
